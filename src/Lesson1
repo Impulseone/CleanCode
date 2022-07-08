@@ -1,0 +1,35 @@
+result - squirrelResult
+// результат подсчета факториала
+
+mas - employeeIds
+// массив, содержащий id сотрудников
+
+map - employeesSalaryTable
+// словарь, содержащий зарплаты сотрудников в соответствии с их id
+
+primaries - primaryFilters
+// список первичных фильтров
+
+secondaries - secondaryFilters
+// список вторичных фильтров
+
+filtersTransaction - getFiltersTransaction
+// транзакция для получения списка фильтров
+
+valueSplit - tagsNamesArray
+// массив с именами тегов, получаемые из строки методом split()
+
+sec - secondaryFilter
+// вторичный фильтр
+
+list - downloadedObjectsList
+// список загруженных объектов по ссылке
+
+auth - authCredentialsString
+// строка, содержащая логин и пароль для входа
+
+isPlatesEnabled - isPlatesRegimeEnabled
+// флажок о том, включен ли режим плит
+
+mustBeSelectedTag - mustBeSelectedTagName
+// имя тега, который должен быть выбран
