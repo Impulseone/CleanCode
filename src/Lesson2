@@ -1,0 +1,58 @@
+6.1
+
+data - commentsList
+// список комментариев
+
+recyclerView - commentsRecyclerView
+// элемент ui, отображающий список комментариев
+
+bp - billingProcessor
+// класс, отвечающий за платежи в приложении
+
+isSubscribed - isUserSubscribed
+// флажок, отображающий статус подписки пользователя
+
+mDrawerToggle - leftActionBar
+// левая менюшка ui
+
+6.2
+
+filtersPresenter
+// использование паттерна Presenter
+
+sendMessageUseCase
+// использование useCase из подхода Clean Architecture
+
+mainViewModel
+// использование паттерна ViewModel
+
+stateFactory
+// использование паттерна factory
+
+6.3
+
+id, subject, text
+// переменные, в совокупности составляющие класс Comment
+
+id, createdDate
+// переменные, в совокупности составляющие класс Task
+
+id, name, price, discount
+// переменные, в совокупности составляющие класс Product
+
+6.4
+
+currentSelectedCommentInGroup - selectedComment
+// выбранный комментарий в группе
+
+subscriptionTransactionDetails - transactionDetails
+// информация о транзакции внутри метода
+
+uri - imageUri
+// путь до картинки
+
+type - channelType
+// тип канала
+
+color - textColor
+// цвет текста
