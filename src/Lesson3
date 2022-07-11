@@ -1,0 +1,33 @@
+7.1
+
+changePrice - isPriceChanged
+
+deliveryNeeded - isDeliveryNeeded
+
+active - isActive
+
+online - isOnline
+
+itemChange - isItemChanged
+
+7.2
+
+error
+// какие-то поля в форме заполнены неверно
+
+success
+// пользователь зарегистрирован успешно
+
+7.3
+
+Пока не использовал более одного вложенного цикла
+
+7.4
+
+begin/end
+// при написании приложения - таймера
+
+7.5
+
+temp - currentInnerElement
+// элемент внутреннего цикла при сортировке
