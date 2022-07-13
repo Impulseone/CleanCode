@@ -1,0 +1,36 @@
+3.1
+
+BrigadeData - Brigade
+
+AttachmentInfoFromServer - ServerAttachment
+
+AttachmentFromInstepServerLoader - ServerAttachmentsLoader
+
+FiltersCalculating - FiltersMapper
+
+FilterUpdateImpl - UpdateFilterEvent
+
+3.2
+
+loadComments - getComments
+// названия методов для получения из внутренней бд приложения (всегда начинаются с get)
+
+loadAllTasks - fetchTasks
+// названия методов для получения с сервера (всегда начинаются с fetch)
+
+FiltersSingleton - FiltersKeeper
+// классы с приставкой Keeper - всегда синглтоны
+
+FiltersQuery - FiltersTransaction
+// классы с приставкой Transaction - всегда обертки для обращения к бд
+
+LoadingView, UpdateDialogView - LoadingDialogView, UpdateDialogView
+// классы с приставкой DialogView - всегда диалоговые окна
+
+OrderController, ProductLoader - OrderApiController, ProductApiController
+// классы с приставкой ApiController всегда служат для обращения к серверу
+
+AddressModel, User - AddressDto, UserDto
+// классы с приставкой Dto всегда обозначают объекты для обмена данных с сервером
+
+
