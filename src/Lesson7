@@ -12,7 +12,7 @@ NotificationService - интерфейс
 NotificationServiceImpl - реализация
 
 LoginPresenter - интерфейс
-LoginPresenter - реализация
+LoginPresenterImpl - реализация
 
 
 
