@@ -1,0 +1,35 @@
+int BUFFER - int READ_BYTES_BUFFER
+// стало более ясно, для чего нужна эта переменная
+
+new byte[4096] - new byte[READ_BYTES_BUFFER];
+// магическое число при чтении из файла заменено на константу
+
+notify(101, nb.build()) - notify(ERROR_NOTIFICATION_ID, nb.build());
+// магическое число в поле с id заменено на константу
+
+response.code() == 200 - response.code() == ERROR_RESPONSE_CODE
+// магическое число кода ответа сервера заменено на константу
+
+final static String usersPath - final static String USERS_PATH
+// имя константы изменено на заглавные буквы через подчеркивание
+
+final static String homePdfsUrl - final static String HOME_PDF_URL
+// имя константы изменено на заглавные буквы через подчеркивание
+
+setRotationY(opened ? 180 : 0) - setRotationY(opened ? ROTATION_OPENED_DEGREES : ROTATION_CLOSED_DEGREES);
+// магическое число, указывающее количество градусов, на сколько надо повернуть иконку, вынесено в константы
+
+new LinearLayout.LayoutParams(181, ViewGroup.LayoutParams.WRAP_CONTENT)) - new LinearLayout.LayoutParams(NAVIGATOR_TEXT_VIEW_WIDTH, ViewGroup.LayoutParams.WRAP_CONTENT))
+// магическое число ширины вью заменено на константу
+
+textView.setTextSize(13) - textView.setTextSize(NAVIGATOR_TEXT_SIZE)
+// магическое число размера текста заменено на константу
+
+imageView.setPadding(5, 0, 0, 0) - imageView.setPadding(PADDING_LEFT, PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM)
+// магические числа размеров вью заменены на константы
+
+filterView.getLayoutParams().width = 370 - filterView.getLayoutParams().width = FILTER_VIEW_WIDTH
+// магическое число ширины вью заменено на константу
+
+if (viewType == 0) - if (viewType == FILTERS_DEFAULT_VIEW_TYPE)
+// магическое число типа вью заменено на константу
