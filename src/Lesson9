@@ -92,6 +92,7 @@
 
 12
 Было -      String json = appSharedPrefs.getString("attachments_paths", "");
+
 Стало -     String json = appSharedPrefs.getString(ATTACHMENTS_PATH, "");
 // заменил магическую строку на константу
 
