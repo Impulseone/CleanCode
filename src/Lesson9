@@ -1,0 +1,98 @@
+1
+Было -      squirrelResult = squirrelResult * i
+
+Стало -     if (squirrelResultLong < Integer.MAX_VALUE) {
+                long squirrelResultLong = (long) squirrelResultInt * (long) i;
+            }
+// добавил проверку переполнения int
+
+
+2
+Было -      result += currentSpeed * (hoursSpent/lastHour);
+
+Стало -     if (lastHour != 0){
+                impulse += currentSpeed * (hoursSpent/lastHour);
+            }
+// добавил проверку на нулевое значение, переименовал переменную result в более понятное имя
+
+
+3
+Было -      if (b - a == 1 || a - b == 1 || pairs.contains(new Pair(a, b))) sum += 1;
+
+Стало -     boolean isNumbersDiffersByOne = firstNumber - secondNumber == 1 || firstNumber - secondNumber == -1;
+            boolean isPairsListContainsPair = pairs.contains(new Pair(a, b));
+            if (isNumbersDiffersByOne || isPairsListContainsPair) sum += 1;
+// добавил логические переменные для упрощения читаемости кода
+
+
+4
+Было -      Glide.with(context).asBitmap().encodeQuality(50).load(filePath)
+
+Стало -     Glide.with(context).asBitmap().encodeQuality(COMPRESSION_QUALITY).load(filePath)
+// заменил магическое число на константу
+
+
+5
+Было -      f.navigateClearingStack(R.id.mainFragment, true, bundleOf("user_id" to userId))
+
+Стало -     f.navigateClearingStack(R.id.mainFragment, true, bundleOf(USER_ID to userId))
+// заменил магическую строку на константу
+
+
+6
+Было -      photo = File(requireContext().filesDir, "${UUID.randomUUID()}.jpeg")
+
+Стало -     photo = File(requireContext().filesDir, "${UUID.randomUUID()}.$IMAGES_FORMAT_JPEG")
+// заменил магическую строку на константу
+
+
+7
+Было -      onClickListener(fileButton) {selectFileContract?.launch("application/*")}
+
+Стало -     onClickListener(fileButton) {selectFileContract?.launch(APP_FILES_FORMAT_ALL)}
+// заменил магическую строку на константу
+
+
+8
+Было -      int count;
+            while ((count = origin.read(data, 0, BUFFER)) != -1) {
+                    out.write(data, 0, count);
+            }
+
+Стало -     int count = origin.read(data, 0, BUFFER);
+            while (count != -1) {
+                    out.write(data, 0, count);
+            }
+// вынес вычисление выражения, которое было внутри if в переменную, упростив булевское выражение
+
+
+9
+Было -      while (i < mas.length - 1 && mas[i + counter].length() <= len - resultStringBuilder.length();) ...
+
+Стало -     boolean isNotLastElement = i < mas.length - 1;
+            boolean isResultLengthBiggerThanNext = mas[i + counter].length() <= len - resultStringBuilder.length();
+            while (isNotLastElement && isResultLengthBiggerThanNext) ...
+// добавил логические переменные для упрощения читаемости кода
+
+
+10
+Было -      result += map.get(aChar) == null ? 23 : map.get(aChar);
+
+Стало -     result += map.get(aChar) == null ? DEFAULT_COST : map.get(aChar);
+// заменил магическое число на константу
+
+
+11
+Было -      double percent = max / sum;
+
+Стало -     if (sum == 0) return;
+            double percent = max / sum;
+// добавил проверку на 0;
+
+
+12
+Было -      String json = appSharedPrefs.getString("attachments_paths", "");
+Стало -     String json = appSharedPrefs.getString(ATTACHMENTS_PATH, "");
+// заменил магическую строку на константу
+
+
