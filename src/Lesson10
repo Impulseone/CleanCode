@@ -1,0 +1,225 @@
+1
+Было -  FileInputStream fi;
+        fi = new FileInputStream(files.get(i));
+
+Стало - FileInputStream fi = new FileInputStream(files.get(i));
+
+// Сделал инициализацию переменной сразу при ее объявлении
+
+
+2
+Было -  BufferedInputStream origin = null;
+        ...//несколько строк кода
+         for (int i = 0; i < files.size(); i++) {
+              FileInputStream fi = new FileInputStream(files.get(i));
+              origin = new BufferedInputStream(fi, BUFFER);
+              ...
+         }
+
+Стало - ...//несколько строк кода
+        BufferedInputStream bufferedInputStream = null;
+        for (int i = 0; i < files.size(); i++) {
+             FileInputStream fileInputStream = new FileInputStream(files.get(i));
+             bufferedInputStream = new BufferedInputStream(fi, BUFFER);
+             ...
+        }
+
+// Перенес инициализацию переменной в место перед непосредственным вызовом и дал более правильное наименование
+
+
+3
+Было - ZipOutputStream out = null;
+       out = new ZipOutputStream(new BufferedOutputStream(dest));
+
+Стало - ZipOutputStream zipOutputStream = new ZipOutputStream(new BufferedOutputStream(dest));
+
+// Сделал инициализацию переменной сразу при ее объявлении
+
+4
+Было - long totalTime = 10_000L
+
+Стало - final long totalTimeMillis = 10_000L
+
+// Добавил переменной модификатор final и дал более правильное наименование
+
+
+5
+Было - float initialValue = 1f
+
+Стало - final float totalTimeValue = 1f
+
+// Добавил переменной модификатор final и дал более правильное наименование
+
+
+6
+Было:
+
+    public class UpdateLoaderImpl {
+
+    private final Context context;
+
+    Provider provider = new Provider();
+    SearchService searchService = new SearchService();
+
+    public UpdateLoaderImpl(Context context) {
+               super(taskManagerUrl);
+               this.context = context;
+           }
+    }
+
+Стало:
+
+    public class UpdateLoaderImpl implements UpdateLoader {
+
+    private final Context context;
+    private Provider provider;
+    private SearchService searchService;
+
+    public UpdateLoaderImpl(Context context) {
+               super(taskManagerUrl);
+               this.context = context;
+               this.provider = new Provider();
+               this.searchService = new SearchService();
+           }
+     ...
+    }
+
+// Перенес инициализацию всех переменных в конструктор
+
+
+7
+Было -  ArrayList<Product> favoriteProducts;
+        ... // несколько строк кода
+        favoriteProducts = getFavoriteProducts(idsArray);
+        for (Product product: favoriteProducts) {
+        ...
+
+Стало - ... // несколько строк кода
+        ArrayList<Product> favoriteProducts = getFavoriteProducts(idsArray);
+        for (Product product: favoriteProducts) {
+        ...
+
+// Перенес объявление переменной в место ее непосредственного использования
+
+
+8
+
+Было - val maxProductsCount = 15
+
+Стало - const val maxProductsCount = 15
+
+// добавил переменной модификатор const
+
+
+9
+
+Было:
+
+    class FiltersHandlerImpl: FiltersHandler {
+
+        HashSet<String> selected = new HashSet<>();
+        HashSet<Pair<String, String>> available = new HashSet<>();
+        HashSet<Pair<String, String>> selectedPrimaries = new HashSet<>();
+
+        public FiltersHandlerImpl(FiltersCalculating filtersCalculating, FilterTagSplitter splitter) {
+            this.calculating = filtersCalculating;
+            this.splitter = splitter;
+        }
+        ...
+    }
+
+Стало:
+
+    class FiltersHandlerImpl: FiltersHandler {
+
+        HashSet<String> selected;
+        HashSet<Pair<String, String>> available;
+        HashSet<Pair<String, String>> selectedPrimaries;
+
+        public FiltersHandlerImpl(FiltersCalculating filtersCalculating, FilterTagSplitter splitter) {
+            this.calculating = filtersCalculating;
+            this.splitter = splitter;
+            selected = new HashSet<>();
+            available = new HashSet<>();
+            selectedPrimaries = new HashSet<>();
+        }
+        ...
+    }
+
+// Перенес инициализацию всех переменных в конструктор
+
+
+10
+
+Было -         int[] resultArray = new int[array.length];
+               ...// несколько строк кода
+               for (int i = 0; i < array.length; i++) {
+                   if (i == 0) resultArray[array.length - 1] = array[i];
+                   else resultArray[array.length - i - 1] = array[i];
+               }
+
+Стало -        ...// несколько строк кода
+                int[] resultArray = new int[array.length];
+                for (int i = 0; i < array.length; i++) {
+                    if (i != 0) {
+                        resultArray[array.length - 1] = array[i];
+                        continue;
+                    }
+                    resultArray[array.length - i - 1] = array[i];
+                }
+// Перенес объявление переменной непосредственно перед циклом и убрал else
+
+
+11
+
+Было -         int[] userIdArray = new int[array.length];
+               ... // операции с userIdArray
+
+Стало -        int[] userIdArray = new int[array.length];
+               ... // операции с userIdArray
+               userIdArray = null;
+
+// Присвоил переменной недопустимое значение
+
+
+12
+
+Было -         int waitingTime = calculateWaitingTime()
+               ... // операции с waitingTime
+
+Стало -        int waitingTime = calculateWaitingTime()
+               if (waitingTime != null && waitingTime >= 0)
+               ... // операции с waitingTime
+               waitingTime = null;
+
+// Включил инвариант и присвоил переменной недопустимое значение после окончания работы с ней
+
+
+13
+
+Было -         List<Comment> commentList = commentsRepository.getCommentList();
+               ... // операции с commentList
+
+Стало -        List<Comment> commentList = commentsRepository.getCommentList();
+               if (commentList != null)
+               // операции с commentList
+
+// Включил инвариант для проверки на null
+
+
+14
+
+Было - static String taskManagerUrl = "..."
+
+Стало - final static String taskManagerUrl = "..."
+
+// Добавил переменной модификатор final
+
+
+15
+
+Было - val attachmentUrl = "...";
+
+Стало - const val attachmentUrl = "..."
+
+// Добавил переменной модификатор const
