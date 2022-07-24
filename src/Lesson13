@@ -1,0 +1,95 @@
+ПРИМЕР 1:
+
+    private static Field[] findApprovedFields(Field[] allFields) {
+        Field[] approvedFields = new Field[allFields.length];
+        for (int i = 0; i < allFields.length; i++) {
+            if (allFields[i].isApproved) approvedFields[i] = allFields[i];
+        }
+        approvedFields = Arrays.stream(approvedFields).filter(Objects::nonNull).toArray(Field[]::new);
+        return approvedFields;
+    }
+
+    В данном методе можно было бы использовать Set и пробегаться по нему циклом foreach, так как обращение к конкретному
+    элементу по индексу не играет большой роли, потому что длина обоих массивов одинаковая
+
+
+ПРИМЕР 2:
+
+    private static void stepToStartFields(Field[] allFields, Field[] battalionFields) {
+        for (Field field : allFields) {
+            for (Field battalionField : battalionFields) {
+                if (field.equalsByCoordinate(battalionField)) {
+                    field.isApproved = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    В данном примере так же можно заменить массивы на Set, так как работа с ними осуществляется без прямой индексации
+
+
+ПРИМЕР 3:
+
+    private void setSubCategories() {
+
+        List<SubCategory> subCategories = CategoriesKeeper.getInstance().getSubCategories();
+        List<Category> categoriesForSubCategoriesList = new ArrayList<>();
+        for (SubCategory subCategory : subCategories) {
+            if (subCategory.getId().substring(0, 1).equals(category.getName().substring(0, 1))) {
+                categoriesForSubCategoriesList.add(new Category(subCategory.getId()+" "+ subCategory.getName(), new ArrayList<>()));
+            }
+        }
+
+        for (Category categoryForSubCategoriesList : categoriesForSubCategoriesList) {
+            for (Product product : category.getProductList()) {
+                if (product.subCategory != null && product.subCategory.equals(categoryForSubCategoriesList.getName().split(" ")[0])) {
+                    categoryForSubCategoriesList.getProductList().add(product);
+                }
+            }
+
+        }
+        categories = categoriesForSubCategoriesList;
+    }
+
+    Здесь для переменных subCategories и categoriesForSubCategoriesList вполне уместно было бы использовать любую безопасную
+    структуру данных, так как порядок элементов неважен.
+
+
+ПРИМЕР 4:
+
+    private String getAttachmentUrl(Comment comment) {
+        String[] paths = comment.getAttachment().split("/");
+        return attachmentUrl + '/' + paths[1] + '/' + paths[2] + '/' + paths[3];
+    }
+
+    В данном случае вместо массива строк лучше использовать стек, так как количество элементов может отличаться от предполагаемого,
+    но важен их порядок
+
+
+ПРИМЕР 5:
+
+    private <T extends Task> void send(String id, T task) {
+        List<Comment> comments = serverTaskCommentsMap.get(id);
+        if (comments == null) {
+            logger.info("Task " + id + " hasn't comments");
+            return;
+        }
+        if (task.getDate().getTime() > comments.get(comments.size() - 1).getCreatedDateTimestamp()) {
+            String createdId;
+            Comment created = createCommentToSend(task, comments.get(0));
+            if (created == null) {
+                logger.warning("Did not create comment to send from modified task:" + task.getId());
+                return;
+            }
+            createdId = loader.sendComment(created);
+            if (createdId != null) {
+                created.setId(createdId);
+                comments.get(comments.size() - 1).setLast(false);
+                comments.add(created);
+            }
+        }
+    }
+
+    В данном случае переменная comments используется только для получения первого и последнего элементов списка,
+    а значит мы могли бы использовать вместо списка, например, очередь.
