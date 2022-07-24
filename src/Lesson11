@@ -1,0 +1,427 @@
+1
+
+Было:
+
+       class ArchivesFragment : Fragment(R.layout.archive_fragment) {
+
+            private val backPressCallback = BackPressCallback()
+
+            override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+                ... // много кода
+                requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressCallback)
+            }
+       }
+
+Стало:
+
+        class ArchivesFragment : Fragment(R.layout.archive_fragment) {
+
+            override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+                ... // много кода
+                val backPressCallback = BackPressCallback()
+                requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressCallback)
+            }
+       }
+
+// Перенес переменную из области класса в область метода, так как она используется только там
+
+
+2
+
+Было:
+
+    package com.example.timeryt
+    import ...
+
+    private const val START_ANGLE = -90f
+    private const val STROKE_WIDTH = 15f
+    private const val INITIAL_SWEEP_ANGLE = 350f
+
+    @Composable
+    fun Timer(modifier: Modifier) {
+       ... // использование переменных
+    }
+
+Стало:
+
+    package com.example.timeryt
+    import ...
+
+    @Composable
+    fun Timer(modifier: Modifier) {
+        val startAngle = -90f
+        val strokeWidth = 15f
+        val initialSweepAngle = 350f
+       ... // использование переменных
+    }
+
+// перенес переменные в область функции, так как используются только там
+
+
+3
+
+Было:
+
+    public class AttachmentsFromInstepServerLoaderImpl implements AttachmentFromInstepServerLoader {
+        TrustManagerHandler trustManagerHandler;
+        ... // другие поля
+    }
+
+Стало:
+    public class AttachmentsFromInstepServerLoaderImpl implements AttachmentFromInstepServerLoader {
+        private TrustManagerHandler trustManagerHandler;
+        ... // другие поля
+    }
+
+
+4
+
+Было:
+
+    public class AttachmentsFromInstepServerLoaderImpl implements AttachmentFromInstepServerLoader {
+        private static final int BUFFER = 2048;
+        ... // другие поля
+
+        private String extractZipfile(InputStream inputStream, String fileName) {
+            ... // использование переменной
+        }
+    }
+
+Стало:
+    public class AttachmentsFromInstepServerLoaderImpl implements AttachmentFromInstepServerLoader {
+
+        private String extractZipfile(InputStream inputStream, String fileName) {
+             final int BUFFER = 2048;
+             ... // использование переменной
+           }
+    }
+
+// перенес переменную в область функции, так как используется только там
+
+
+5
+
+Было:
+
+    private String extractZipfile(InputStream inputStream, String fileName) {
+        List<File> files = new ArrayList<>();
+        ... // много кода
+        try {
+            ...//использование переменной files
+        }
+    }
+
+Стало:
+    private String extractZipfile(InputStream inputStream, String fileName) {
+        try {
+            List<File> files = new ArrayList<>();
+            ...//использование переменной files
+        }
+    }
+
+// перенес переменную в область видимости блока try, так как используется только там
+
+
+6
+
+Было:
+    public class AttachmentsFromInstepServerLoaderImpl implements AttachmentFromInstepServerLoader {
+
+        Map<String, String> newLoadedPaths = new HashMap<>();
+        ... // другие поля
+
+        public List<CommentWithAttachment> loadCommentsWithAttachments() {
+            ... //использование переменной
+        }
+    }
+
+Стало:
+    public class AttachmentsFromInstepServerLoaderImpl implements AttachmentFromInstepServerLoader {
+
+        ... // другие поля
+
+        public List<CommentWithAttachment> loadCommentsWithAttachments() {
+            Map<String, String> newLoadedPaths = new HashMap<>();
+                ... //использование переменной
+        }
+
+// перенес переменную в область функции, так как используется только там
+
+
+7
+
+Было:
+        if (!attachment.getFile().equals("")) {
+            String pathOnStorage;
+            try {
+                ...//много кода
+                pathOnStorage = ...// использование переменной
+            }
+         }
+
+Стало:
+        if (!attachment.getFile().equals("")) {
+            try {
+                ...//много кода
+                String pathOnStorage = ...// использование переменной
+            }
+         }
+
+// перенес переменную в область видимости блока try, так как используется только там
+
+
+8
+
+Было:
+
+        public class AttachmentsFromTaskManagerLoader {
+
+            static final Logger logger = Logger.getLogger(AttachmentsFromTaskManagerLoader.class.getName());
+
+            final Context context;
+
+            ... // другие поля и методы
+        }
+
+Стало:
+
+         public class AttachmentsFromTaskManagerLoader {
+
+           private static final Logger logger = Logger.getLogger(AttachmentsFromTaskManagerLoader.class.getName());
+
+           private final Context context;
+
+            ... // другие поля и методы
+        }
+
+// Сузил область видимости переменной до private
+
+
+9
+
+Было:
+
+    public class CommentWithAttachment {
+        String commentId;
+        String filePath;
+        ... // другие поля и методы
+    }
+
+Стало:
+
+    public class CommentWithAttachment {
+        private String commentId;
+        private String filePath;
+        ... // другие поля и методы
+    }
+
+// Сузил область видимости переменной до private
+
+10
+
+Было:
+
+    private fun createAndShowNotification (viewType: PushNotificationViewType) {
+            val appNotification = ...// инициализация переменной
+            when (viewType) {
+                PushNotificationViewType.IN_APP -> {
+                    ... // много кода
+                    setExtras(intent, appNotification, viewType)
+                    context.startActivity(intent)
+                }
+                PushNotificationViewType.DEFAULT -> {
+                    ... // много кода
+                    buildNotification(appNotification)
+                }
+            }
+        }
+
+Стало:
+
+    private fun createAndShowNotification (viewType: PushNotificationViewType) {
+                val appNotification = ...// инициализация переменной
+                when (viewType) {
+                    PushNotificationViewType.IN_APP -> {
+                        val intent = createIntent()
+                        setExtras(intent, appNotification, viewType)
+                        context.startActivity(intent)
+                    }
+                    PushNotificationViewType.DEFAULT -> {
+                        buildByViewType(viewType)
+                        buildNotification(appNotification)
+                    }
+                }
+            }
+
+    private fun createIntent(): Intent {...}
+
+    private fun buildByViewType(viewType: PushNotificationViewType) {...}
+
+// упростил функцию, разбив блоки кода на отдельные методы
+
+
+11
+
+Было:
+
+    private void readSymbols(){
+        char c;
+        ... // несколько строк кода
+        do {
+            c = ...// использование переменной
+        }
+    }
+
+Стало:
+
+    private void readSymbols(){
+            ... // несколько строк кода
+            char symbol;
+            do {
+                symbol = ...// использование переменной
+            }
+        }
+// перенес объявление переменной ближе к блоку do и переименовал переменную
+
+
+12
+
+Было:
+
+    private void simpleEditor(){
+        String consoleInputArray[] = new String[100];
+        ...// несколько строк кода
+        for (int i = 0; i<0; i++){
+            consoleInputArray[i] = ...// использование переменной
+        }
+    }
+
+
+Стало:
+
+    private void simpleEditor(){
+        ...// несколько строк кода
+        String consoleInputArray[] = new String[100];
+        for (int i = 0; i<0; i++){
+            consoleInputArray[i] = ...// использование переменной
+        }
+    }
+// перенес объявление переменной ближе к блоку for
+
+
+13
+
+Было:
+
+    public class PrintWriterDemo {
+
+        PrintWriter pw = new PrintWriter(System.out, true);
+
+        public void write(){
+            pw.println(...)// использование переменной
+        }
+    }
+
+Стало:
+
+    public class PrintWriterDemo {
+            public void write() {
+                PrintWriter pw = new PrintWriter(System.out, true);
+                pw.println(...)// использование переменной
+            }
+    }
+
+// Перенес объявление переменной в области видимости метода
+
+
+14
+
+Было:
+
+    class FileManager {
+
+        public void showFile(String filename) {
+            int i;
+            FileInputStream fin;
+
+            if (filename == null || filename.length() == 0) {
+                System.out.println("...")
+                return;
+            }
+
+            try {
+                ...// использование переменной fin
+            }
+            catch(FileNotFoundException е) {
+                ...
+                return;
+            }
+            try {
+                do {
+                    ...// использование переменной fin и i
+                }
+            }
+        }
+    }
+
+Стало:
+
+    class FileManager {
+
+        public void showFile(String filename) {
+            if (filename == null || filename.length() == 0) {
+                System.out.println("...")
+                return;
+            }
+            try{
+                openFile(filename);
+            }
+            catch ...
+        }
+
+        private void openFile (String filename) throws FileNotFoundException, IOException {
+            int symbol;
+            FileInputStream inputStream;
+            ...// использование переменной inputStream
+            do {
+               ...// использование переменной inputStream и symbol
+            }
+        }
+    }
+
+// разделил один метод на два, вынеся переменные туда, где они непосредственно будут использоваться, и переименовал их
+
+
+15
+
+Было:
+
+    class FileExtractor {
+        FileInputStream fin = null;
+        FileOutputStream fout = null;
+
+       public void copyFile (String filename){
+            ...// использование переменных fin, fout
+       }
+
+       public void showFileInfo (String filename){
+            ...// использование переменных fin, fout
+       }
+    }
+
+Стало:
+
+    class FileExtractor {
+       private FileInputStream fileInputStream = null;
+       private FileOutputStream fileOutputStream = null;
+
+       public void copyFile (String filename){
+            ...// использование переменных fileInputStream, fileOutputStream
+       }
+
+       public void showFileInfo (String filename){
+            ...// использование переменных fileInputStream, fileOutputStream
+       }
+    }
+
+// добавил переменным модификатор private и переименовал их
