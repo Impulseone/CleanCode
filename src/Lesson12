@@ -1,0 +1,53 @@
+Пример 1
+
+Canvas(modifier = modifier.padding(60.dp)) {
+                drawArc(
+                    color = GrayLight,
+                    startAngle = 360f,
+                    sweepAngle = 360f,
+                    useCenter = false,
+                    size = Size(size.width, size.height),
+                    style = Stroke(width = strokeWidth, cap = StrokeCap.Round),
+                )
+ }
+
+ В данном примере создается UI элемент приложения Android. В данном случае было выбрано максимально раннее связывание
+ переменных padding, startAngle, sweepAngle, так как данный элемент в приложении один и значения отступов и краев
+ отрисовки для него уникальны и нигде в приложении больше не используются. Если бы таких элементов было несколько, то
+ были бы определены константы для них.
+
+
+ Пример 2
+
+    const val FCM_MESSAGE_TYPE_INFO = "info"
+    const val FCM_MESSAGE_TYPE_PRODUCT = "product"
+    const val FCM_MESSAGE_TYPE_SUPPORT_CHAT = "support_chat"
+    const val FCM_MESSAGE_TYPE_SILENT = "silent"
+
+    fun extractNotification(remoteMessage: RemoteMessage): Notification? {
+            return with(remoteMessage) {
+                with(Constants) {
+                    when (data[FCM_MESSAGE_TYPE]) {
+                        FCM_MESSAGE_TYPE_INFO -> createInfoNotification(data)
+                        FCM_MESSAGE_TYPE_PRODUCT -> createProductNotification(data)
+                        FCM_MESSAGE_TYPE_SUPPORT_CHAT -> createSupportChatNotification(data)
+                        FCM_MESSAGE_TYPE_SILENT -> createSilentNotification(data)
+                        else -> null
+                    }
+                }
+            }
+        }
+
+В данном случае были определены константы для переменных, обозначающих тип сообщения, так как они используются во многих
+местах кода, и если нужно будет изменить какой-то тип или появится новый, то достаточно будет внести изменения всего
+в одно место кода
+
+
+Пример 3
+
+val name = context.getString(appNotificationChannel.channelName)
+
+В данном случае связывание будет выполнено во время выполнения, когда у приложения будет контекст и будет доступ к ресурсам
+через него, которые расположены в файле strings.xml. Благодаря данному подходу упрощается локализация приложения и
+появляется возможность переключать язык приложения без перекомпиляции проекта.
+
