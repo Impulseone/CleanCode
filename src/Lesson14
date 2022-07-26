@@ -1,0 +1,92 @@
+Пример 1:
+
+    // Расчет случайного числа в промежутке от min до max
+    static int randomInARange(int min, int max) {
+        return  (int) (Math.random() * ((max - min) + 1)) + min;
+    }
+
+
+Пример 2:
+
+    public void override(Collection<Task> taskCollection) {
+        ...
+        //Добавляем теги для сохранения и для связей задача-теги
+        taskCollection.forEach(task -> {
+            List<ru.ftsolution.construction_control.db.room.entity.Tag> box
+                    = task.getTags().stream().map(this::map).collect(Collectors.toList());
+            tags.addAll(box);
+            taskTags.put(task.getId(), box);
+        });
+       ...
+    }
+
+
+Пример 3:
+
+   // Делаем связь между id задачи и соответствующими ей тегами
+    public void saveRelation(String taskId, List<Tag> tags){
+        List<TaskTag> taskTags = new LinkedList<>();
+        tags.forEach(tag -> taskTags.add(new TaskTag(taskId, tag.getId())));
+        taskTagDao.insert(taskTags);
+    }
+
+
+Пример 4:
+
+
+    public void attach(CreateIncidentView view) throws Throwable {
+        this.view = view;
+        //получаем данные по задаче, либо генерируем исключение
+        data = view.getTaskData().orElseThrow(CantAttachViewWithoutData::new);
+        view.setCallback(CreateIncidentPresenterImpl.this::createIncident);
+        view.setSubject(data.getSubject());
+    }
+
+
+Пример 5:
+
+// Сортировка по секции, этажу и комнате. Рассчитывается удельный вес каждого параметра и вычисляется их разница.
+private List<IncidentTask> filterByParameter(List<IncidentTask> tasks) {
+        tasks.sort((o1, o2) -> {
+            int section1 = Integer.parseInt(findTag(o1.getTags(), FiltersNames.SECTION).getValue().split("/")[1].split(" ")[1]) * 10_000_000;
+            int floor1 = Integer.parseInt(findTag(o1.getTags(), FiltersNames.FLOOR).getValue().split("/")[1].split(" ")[1]) * 1_000_000;
+            int flat1 = Integer.parseInt(findTag(o1.getTags(), FiltersNames.FLAT).getValue().split("/")[1].split(" ")[1]) * 100_000;
+            int weight1 = section1 + floor1 + flat1;
+
+            int section2 = Integer.parseInt(findTag(o2.getTags(), FiltersNames.SECTION).getValue().split("/")[1].split(" ")[1]) * 10_000_000;
+            int floor2 = Integer.parseInt(findTag(o2.getTags(), FiltersNames.FLOOR).getValue().split("/")[1].split(" ")[1]) * 1_000_000;
+            int flat2 = Integer.parseInt(findTag(o2.getTags(), FiltersNames.FLAT).getValue().split("/")[1].split(" ")[1]) * 100_000;
+            int weight2 = section2 + floor2 + flat2;
+            return weight1 - weight2;
+        });
+        return tasks;
+    }
+
+
+Пример 6:
+
+       // Если номер в названии тега содержится в списке номеров групп работ, то добавляем его к строке
+       for (int i = 0; i < tagArrayList.size(); i++) {
+             if (groupNumbers.contains(Integer.parseInt(tagArrayList.get(i).getValue().substring(0, 1)))) {
+                 tags += tagArrayList.get(i).getValue().split("/")[1] + ", ";
+             }
+       }
+
+
+Пример 7:
+        // Получаем только те задачи, теги которых должны быть выбраны обязательно
+        private List<IncidentTask> filterIncidents() {
+            List<IncidentTask> filteredIncidents = new ArrayList<>();
+            for (IncidentTask task : allIncidents) {
+                for (Tag tag : selectedTagsListContainsMustBeSelected) {
+                    if (task.getTags().contains(tag)) {
+                        filteredIncidents.add(task);
+                        break;
+                    }
+                }
+            }
+            return filteredIncidents;
+        }
+
+
+
