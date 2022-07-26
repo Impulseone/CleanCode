@@ -1,3 +1,5 @@
+3.1
+
 Пример 1:
 
     // Расчет случайного числа в промежутке от min до max
@@ -88,5 +90,7 @@ private List<IncidentTask> filterByParameter(List<IncidentTask> tasks) {
             return filteredIncidents;
         }
 
+3.2
 
+Стараюсь писать наглядный код, не требующий комментариев
 
