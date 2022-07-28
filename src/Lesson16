@@ -1,0 +1,258 @@
+Пример 1
+    Было:
+        /**
+         * Attachment url in comment looks like: [server_folder]/[task_id]/[comment_id]/[file_salt]
+         * method recode it to [task_id]/[comment_id]/[file_salt]
+         * <p>
+         * This operation required because of Task Manager works inside [server]
+         * but File Service works on [server]/[server_folder]
+         *
+         * @param comment that contains an attachment
+         * @return url of comment's attachment
+         */
+        private String getAttachmentUrl(Comment comment) {
+            String[] paths = comment.getAttachment().split("/");
+            return attachmentUrl + '/' + paths[1] + '/' + paths[2] + '/' + paths[3];
+        }
+
+     Стало:
+
+             // Attachment url in comment looks like: [server_folder]/[task_id]/[comment_id]/[file_salt]
+             // method recode it to [task_id]/[comment_id]/[file_salt]
+             private String getAttachmentUrl(Comment comment) {
+                 String[] paths = comment.getAttachment().split("/");
+                 return attachmentUrl + '/' + paths[1] + '/' + paths[2] + '/' + paths[3];
+             }
+
+    Пояснение: Удалил избыточный комментарий (пункт 7)
+
+
+Пример 2
+
+    Было:
+        // download attachments from server
+        void downloadFiles(){
+            ...
+        }
+
+     Стало:
+        void downloadAttachments(){
+            ...
+        }
+
+     Пояснение: Удалил избыточный комментарий и переименовал метод (пункт 7)
+
+
+Пример 3
+
+    Было:
+           /**
+            * @return path to comment's attachment
+            */
+           @Override
+           @Nullable
+           public String loadAttachmentFromServer(Comment comment) {
+               return attachmentsFromTaskManagerLoader.loadAttachmentFromServer(comment);
+           }
+
+    Стало:
+         /**
+         * @return storage path to comment's attachment on success, null otherwise
+         */
+        @Override
+        @Nullable
+        public String loadAttachmentFromServer(Comment comment) {
+            return attachmentsFromTaskManagerLoader.loadAttachmentFromServer(comment);
+        }
+
+    Пояснение: Более хорошо описал возвращаемое значение (пункт 2)
+
+
+Пример 4
+
+    Был закомментированный метод, удалил его (пункт 11):
+        //    @Before
+        //    public void setUp() throws Exception {
+        //        InputStream stream = new FileInputStream("src/test/resources/initial_scroll_request.json");
+        //        byte[] data = new byte[stream.available()];
+        //        stream.read(data);
+        //        expected = new String(data, StandardCharsets.UTF_8);
+        //    }
+
+Пример 5
+
+    Было:
+
+    // Pause the VPN (same as using the pause feature in the notification bar)
+      public void pause() throws RemoteException;
+
+    Стало:
+
+      public void pauseVPN() throws RemoteException;
+
+    Пояснение: Использовал более информативное имя функции вместо комментария (пункт 12)
+
+Пример 6
+
+    Было:
+     /** Remove a profile by UUID */
+         public void removeProfile(java.lang.String profileUUID) throws RemoteException;
+
+    Стало:
+         public void removeProfile(String profileUUID) throws RemoteException;
+
+    Пояснение: удалил шум (пункт 4)
+
+
+Пример 7
+
+      Было:
+         // Create an ssl socket factory with our all-trusting manager
+          final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+      Стало:
+          final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+         Пояснение: удалил шум (пункт 4)
+
+
+Пример 8
+
+    Было:
+        /**
+         * every current comment sets as last and previous sets as not last
+         * @param map to be expanded with comments
+         * @param comments to be filled to map
+        */
+        void fill(Map<String, List<Comment>> map, List<Comment> comments) {
+            ...
+        }
+
+     Стало:
+         /**
+          * @param map to be expanded with comments
+          * @param comments to be filled to map
+         */
+         void fill(Map<String, List<Comment>> map, List<Comment> comments) {
+                     ...
+         }
+
+      Пояснение: убрал утверждение, которое и так будет очевидно из кода (пункт 7)
+
+
+Пример 9
+
+        Было:
+            /**
+             * Sends user modified task to server
+             * If loader::send returns non-null id
+             * then add created comment to server's comments
+             */
+            private <T extends Task> void sendUserModifiedTask(String id, T task) {
+                ...
+            }
+
+        Стало:
+            /**
+               * If loader::send returns non-null id
+               * then add created comment to server's comments
+               */
+              private <T extends Task> void sendUserModifiedTask(String id, T task) {
+                  ...
+              }
+
+        Пояснение: убрал утверждение, которое и так будет очевидно из кода (пункт 7)
+
+Пример 10
+
+        Было:
+            /////////////// LAUNCH THIS TEST ONLY IF SCROLL SERVICE IS AVAILABLE ////////////////////////
+                void scrollRequestTest(){
+                    ...
+                }
+        Стало:
+            // launch this test only if scroll service is available
+                void scrollRequestTest(){
+                    ...
+                }
+
+        Пояснение: Убрал ненужный позиционный маркер (пункт 5)
+
+Пример 11
+
+        Было:
+        /** Used to trigger to the Android VPN permission dialog (VPNService.prepare()) in advance,
+          	 * if this return null OpenVPN already has the permissions otherwise you can start the returned Intent
+          	 * to let OpenVPN request the permission */
+          public Intent prepareVPNService() throws RemoteException;
+
+         Стало:
+         /** Used to trigger to the Android VPN permission dialog
+           * if this return null OpenVPN already has the permissions otherwise this return Intent
+           * to request the permission */
+         public Intent prepareVPNService() throws RemoteException;
+
+         Пояснение: сократил избыточный комментарий (пункт 7)
+
+Пример 12
+
+    Было:
+        // extract notification
+        void extract(){
+            ...
+        }
+
+     Стало:
+        void extractAndShowNotification(){
+            ...
+        }
+
+     Пояснение: Удалил избыточный комментарий и переименовал метод (пункт 7)
+
+
+Пример 13
+
+    Было:
+
+           //////////DO NOT MODIFY THIS FILE!!!/////////
+           public final class BuildConfig {
+                ...
+           }
+
+    Стало:
+            // Use this file only for read values
+            public final class BuildConfig {
+                ...
+            }
+
+    Пояснение: Убрал позиционные маркеры и более ясно описал назначение класса (пункт 5)
+
+
+Пример 14
+
+      Было:
+          // remember the state of lazy list
+          @Composable
+          fun rememberForeverLazyListState(){
+            ...
+          }
+
+      Стало:
+           @Composable
+            fun rememberLazyListState(){
+               ...
+            }
+
+         Пояснение: удалил шум и переименовал метод (пункт 4)
+
+
+Пример 15
+
+    Был закомментированный метод, удалил его (пункт 11):
+        private Map<String, String> getPreviousLoadedPaths() {
+           SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+           Gson gson = new Gson();
+           String json = appSharedPrefs.getString("attachments_paths", "");
+           Type type = new TypeToken<Map<String, String>>() {}.getType();
+           return gson.fromJson(json, type);
+        }
